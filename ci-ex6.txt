@@ -1,0 +1,360 @@
+Nehru Family
+
+% --- Facts: Genders ---
+male(motilal_nehru).
+male(jawaharlal_nehru).
+male(feroze_gandhi).
+male(rajiv_gandhi).
+male(sanjay_gandhi).
+male(rahul_gandhi).
+male(varun_gandhi).
+
+female(swarup_rani).
+female(kamala_nehru).
+female(indira_gandhi).
+female(sonia_gandhi).
+female(maneka_gandhi).
+female(priyanka_gandhi).
+
+% --- Facts: Parent-Child (parent(Parent, Child)) ---
+parent(motilal_nehru, jawaharlal_nehru).
+parent(swarup_rani, jawaharlal_nehru).
+parent(jawaharlal_nehru, indira_gandhi).
+parent(kamala_nehru, indira_gandhi).
+parent(indira_gandhi, rajiv_gandhi).
+parent(indira_gandhi, sanjay_gandhi).
+parent(feroze_gandhi, rajiv_gandhi).
+parent(feroze_gandhi, sanjay_gandhi).
+parent(rajiv_gandhi, rahul_gandhi).
+parent(rajiv_gandhi, priyanka_gandhi).
+parent(sonia_gandhi, rahul_gandhi).
+parent(sonia_gandhi, priyanka_gandhi).
+parent(sanjay_gandhi, varun_gandhi).
+parent(maneka_gandhi, varun_gandhi).
+
+shopping cart
+
+
+:- dynamic(item/3).
+
+% item(Name, PricePerUnit, UnitType)
+item(apple, 25.5, piece).
+item(milk, 60.0, liter).
+item(bread, 55.0, loaf).
+item(eggs,5.0,piece).
+
+% --- 1. Order and Calculation Functionality ---
+
+get_subtotal(Name, Qty, SubTotal) :-
+    item(Name, Price, _),
+    SubTotal is Price * Qty,
+    format('~w x ~w: $~2f~n', [Qty, Name, SubTotal]).
+get_subtotal(Name, _, 0) :-
+    \+ item(Name, _, _),
+    format('Error: ~w is not in the system.~n', [Name]).
+
+final_total([], 0).
+final_total([(Name, Qty) | Rest], Total) :-
+    get_subtotal(Name, Qty, Sub),
+    final_total(Rest, RemainingTotal),
+    Total is Sub + RemainingTotal.
+
+order(OrderList) :-
+    writeln('--- Grocery Receipt ---'),
+    final_total(OrderList, Total),
+    format('-----------------------~n'),
+    format('FINAL TOTAL: $~2f~n', [Total]).
+
+% --- 2. Add New Item to Knowledge Base ---
+
+add_new_item(Name, Price, Unit) :-
+    assertz(item(Name, Price, Unit)),
+    format('~w has been added to the knowledge base.~n', [Name]).
+
+Simple Calculator
+
+% Calculator Rules
+add(X, Y, Z) :- Z is X + Y.
+sub(X, Y, Z) :- Z is X - Y.
+mul(X, Y, Z) :- Z is X * Y.
+div(X, Y, Z) :- Y \= 0, Z is X / Y.
+pow(X,Y,Z) :-Z is X**Y.
+rem(X,Y,Z) :-Y\=0, Z is X mod Y.
+
+
+
+
+
+1. Arithmetic and Set Operations
+
+calc(add, X, Y, R) :-
+    R is X + Y.
+
+calc(sub, X, Y, Diff) :-
+    Diff is X - Y.
+
+calc(mul, X, Y, Prod) :-
+    Prod is X * Y.
+
+calc(div, X, Y, Quo) :-
+    Quo is X / Y.
+
+calc(modulus, X, Y, Rem) :-
+    Rem is X mod Y.
+
+calc(union, S1, S2, U) :-
+    union(S1, S2, U).
+
+calc(intersection, S1, S2, I) :-
+    intersection(S1, S2, I).
+
+calc(diff, S1, S2, D) :-
+    subtract(S1, S2, D).
+
+
+
+### % Initial pizza menu (pizza, price)
+
+```
+pizza(margherita,200).
+pizza(pepperoni,250).
+pizza(veggie,220).
+pizza(farmhouse,280).
+pizza(cheese,180).
+```
+
+---
+
+### % Add new pizza
+
+```
+add_pizza(Name,Price):-
+    assertz(pizza(Name,Price)),
+    write('Pizza Added'), nl.
+```
+
+---
+
+### % Display pizza menu
+
+```
+show_menu :-
+    pizza(Name,Price),
+    write(Name), write(' - Rs '), write(Price), nl,
+    fail.
+
+show_menu.
+```
+
+---
+
+### % Order pizza with quantity
+
+```
+order(Pizza,Qty,Subtotal):-
+    pizza(Pizza,Price),
+    Subtotal is Price * Qty.
+```
+
+---
+
+### % Show order details
+
+```
+order_details(Pizza,Qty):-
+    pizza(Pizza,Price),
+    Subtotal is Price * Qty,
+    write('Pizza : '), write(Pizza), nl,
+    write('Price : Rs '), write(Price), nl,
+    write('Quantity : '), write(Qty), nl,
+    write('Subtotal : Rs '), write(Subtotal), nl.
+```
+
+---
+
+### % Total bill for two pizzas
+
+```
+bill(Pizza1,Qty1,Pizza2,Qty2,Total):-
+    order(Pizza1,Qty1,S1),
+    order(Pizza2,Qty2,S2),
+    Total is S1 + S2.
+```
+
+
+
+
+### Male
+
+```
+male(karamchand).
+male(mohandas).
+male(laxmidas).
+male(karsandas).
+male(hiralal).
+male(manilal).
+male(ramdas).
+male(devdas).
+male(rajmohan).
+male(gopalakrishna).
+male(ramchandra).
+male(arun).
+male(tushar).
+```
+
+---
+
+### Female
+
+```
+female(putlibai).
+female(kasturba).
+female(ralitabai).
+female(laxmi).
+female(shanti).
+female(ela).
+female(leela).
+```
+
+---
+
+### Parent Relations
+
+```
+parent(karamchand,mohandas).
+parent(putlibai,mohandas).
+
+parent(karamchand,laxmidas).
+parent(putlibai,laxmidas).
+
+parent(karamchand,karsandas).
+parent(putlibai,karsandas).
+
+parent(karamchand,ralitabai).
+parent(putlibai,ralitabai).
+
+parent(mohandas,hiralal).
+parent(kasturba,hiralal).
+
+parent(mohandas,manilal).
+parent(kasturba,manilal).
+
+parent(mohandas,ramdas).
+parent(kasturba,ramdas).
+
+parent(mohandas,devdas).
+parent(kasturba,devdas).
+
+parent(mohandas,laxmi).
+parent(kasturba,laxmi).
+
+parent(hiralal,shanti).
+
+parent(manilal,arun).
+parent(manilal,ela).
+
+parent(arun,tushar).
+
+parent(devdas,rajmohan).
+parent(devdas,gopalakrishna).
+parent(devdas,ramchandra).
+
+parent(ramchandra,leela).
+```
+
+---
+
+# Rules (same as your Nehru program)
+
+### Father
+
+```
+father(X,Y) :-
+parent(X,Y),
+male(X).
+```
+
+---
+
+### Mother
+
+```
+mother(X,Y) :-
+parent(X,Y),
+female(X).
+```
+
+---
+
+### Grandparent
+
+```
+grandparent(X,Y) :-
+parent(X,Z),
+parent(Z,Y).
+```
+
+---
+
+### Grandfather
+
+```
+grandfather(X,Y) :-
+grandparent(X,Y),
+male(X).
+```
+
+---
+
+### Grandmother
+
+```
+grandmother(X,Y) :-
+grandparent(X,Y),
+female(X).
+```
+
+---
+
+### Sibling
+
+```
+sibling(X,Y) :-
+parent(Z,X),
+parent(Z,Y),
+X \= Y.
+```
+
+---
+
+### Brother
+
+```
+brother(X,Y) :-
+sibling(X,Y),
+male(X).
+```
+
+---
+
+### Sister
+
+```
+sister(X,Y) :-
+sibling(X,Y),
+female(X).
+```
+
+---
+
+### Ancestor
+
+```
+ancestor(X,Y) :-
+parent(X,Y).
+
+ancestor(X,Y) :-
+parent(X,Z),
+ancestor(Z,Y).
+```
+
