@@ -1,0 +1,175 @@
+(defun count-vowels (str)
+  (let ((count 0))
+    (loop for ch across str do
+         (when (find ch "aeiouAEIOU")
+           (incf count)))
+    count))
+
+(defun main ()
+  (format t "Enter a string: ")
+  (let ((input (read-line)))
+    
+    ;; Length
+    (format t "~%Length: ~A" (length input))
+    
+    ;; Reverse
+    (format t "~%Reverse: ~A"
+            (coerce (reverse (coerce input 'list)) 'string))
+    
+    ;; Uppercase
+    (format t "~%Uppercase: ~A" (string-upcase input))
+    
+    ;; Lowercase
+    (format t "~%Lowercase: ~A" (string-downcase input))
+    
+    ;; Vowel count
+    (format t "~%Vowel Count: ~A" (count-vowels input))
+    
+    (terpri)))
+
+(main)
+
+Enter a string: Jovit
+Length: 5
+Reverse: tivoJ
+Uppercase: JOVIT
+Lowercase: jovit
+Vowel Count: 2
+
+
+
+
+
+(defun gcd-func (a b)
+  (if (= b 0)
+      a
+      (gcd-func b (mod a b))))
+
+(defun lcm-func (a b)
+  (/ (* a b) (gcd-func a b)))
+
+(format t "Enter two integers: ")
+(let ((a (read)) (b (read)))
+  (format t "~%GCD: ~A" (gcd-func a b))
+  (format t "~%LCM: ~A" (lcm-func a b)))
+
+
+Enter two integers: 6 12
+GCD: 6
+LCM: 12
+
+
+
+
+(format t "Enter length and breadth: ")
+(let ((l (read)) (b (read)))
+  (format t "~%Area: ~A" (* l b))
+  (format t "~%Perimeter: ~A" (* 2 (+ l b))))
+
+Enter length and breadth: 4 3
+Area: 12
+Perimeter: 14
+
+
+
+
+(format t "Enter radius: ")
+(let ((r (read)))
+  (format t "~%Area of Circle: ~A" (* 3.14 r r))
+  (format t "~%Circumference: ~A" (* 2 3.14 r)))
+
+
+Enter radius: 3
+Area of Circle: 28.26
+Circumference: 18.84
+
+
+
+
+(format t "Enter a list (e.g., (1 2 3 4)): ")
+(let ((lst (read)))
+  (format t "~%List: ~A" lst)
+  (format t "~%Length: ~A" (length lst))
+  (format t "~%First element: ~A" (first lst))
+  (format t "~%Last element: ~A" (car (last lst)))
+  (format t "~%Reversed list: ~A" (reverse lst))
+  (format t "~%Sum: ~A" (reduce #'+ lst)))
+
+Enter a list (e.g., (1 2 3 4)): 
+List: (7 4 9 2 5)
+Length: 5
+First element: 7
+Last element: 5
+Reversed list: (5 2 9 4 7)
+Sum: 27
+
+
+
+
+
+(format t "Enter first number: ")
+(setq a (read))
+
+(format t "Enter second number: ")
+(setq b (read))
+
+(format t "~%Choose operation:
+ +  (Addition)
+ -  (Subtraction)
+ *  (Multiplication)
+ /  (Division)
+ %  (Modulus)
+ p  (Power a^b)
+ m  (Maximum)
+ n  (Minimum)
+: ")
+
+(setq op (read))
+
+(cond
+  ((eq op '+) (format t "~%Result: ~A" (+ a b)))
+  ((eq op '-) (format t "~%Result: ~A" (- a b)))
+  ((eq op '*) (format t "~%Result: ~A" (* a b)))
+  ((eq op '/) (format t "~%Result: ~A" (/ a b)))
+  ((eq op '%) (format t "~%Result: ~A" (mod a b)))
+  ((eq op 'p) (format t "~%Result: ~A" (expt a b)))
+  ((eq op 'm) (format t "~%Maximum: ~A" (max a b)))
+  ((eq op 'n) (format t "~%Minimum: ~A" (min a b)))
+  (t (format t "~%Invalid operation")))
+
+
+Enter first number:
+Enter second number: 
+Choose operation:
+ +  (Addition)
+ -  (Subtraction)
+ *  (Multiplication)
+ /  (Division)
+ %  (Modulus)
+ p  (Power a^b)
+ m  (Maximum)
+ n  (Minimum)
+
+10 5 + 
+Result: 15
+
+10 5 -
+Result: 5
+
+10 5 *
+Result: 50
+
+10 5 /
+Result: 2
+
+10 5 %
+Result: 0
+
+10 5 p
+Result: 100000
+
+10 5 m
+Maximum: 10
+
+10 5 n
+Minimum: 5
