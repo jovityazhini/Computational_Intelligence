@@ -1,0 +1,174 @@
+target = int(input("Enter target sum: "))
+
+count = 0  
+
+for i in range(1, 7):
+    for j in range(1, 7):
+        if i + j == target:
+            print(f"({i}, {j})")
+            count += 1
+
+if count == 0:
+    print("No possible outcomes")
+else:
+    probability = count / 36
+    print("Total favorable outcomes:", count)
+    print("Probability:", f"{probability:.2f}")
+
+
+Enter target sum: 2
+(1, 1)
+Total favorable outcomes: 1
+Probability: 0.03
+
+Enter target sum: 7
+(1, 6)
+(2, 5)
+(3, 4)
+(4, 3)
+(5, 2)
+(6, 1)
+Total favorable outcomes: 6
+Probability: 0.17
+
+
+
+a = input("Enter name of event A: ")
+b = input("Enter name of event B: ")
+
+p_a = float(input(f"Enter P({a}): "))
+p_b = float(input(f"Enter P({b}): "))
+p_a_given_b = float(input(f"Enter P({a}|{b}): "))
+
+p_b_given_a = (p_a_given_b * p_b) / p_a
+
+print(f"P({b}|{a}) = {p_b_given_a}")
+
+
+Enter name of event A: Disease
+Enter name of event B: Test Positive
+Enter P(Disease): 0.01
+Enter P(Test Positive): 0.06
+Enter P(Disease|Test Positive): 0.1
+P(Test Positive|Disease) = 0.6
+
+
+n = int(input("Enter number of variables: "))
+
+names = []
+for i in range(n):
+    names.append(input(f"Enter name of variable {i+1}: ").strip())
+
+total = 2 ** n
+print("Total combinations:", total)
+
+probs = []
+
+print("Enter probabilities for each combination:")
+
+for i in range(total):
+    combo = input(f"Combination {i+1} (use {names}): ")
+    p = float(input("Probability: "))
+    
+    values = {var: False for var in names}
+    tokens = combo.split()
+    
+    for t in tokens:
+        if t.startswith("~") or t.startswith("!"):
+            values[t[1:]] = False
+        else:
+            values[t] = True
+    
+    probs.append((values, p))
+
+
+
+def evaluate(expr, values):
+    expr = expr.replace("^", " and ")
+    expr = expr.replace("v", " or ")
+    expr = expr.replace("|", " or ")
+    expr = expr.replace("~", " not ")
+
+    return eval(expr, {}, values)
+
+
+
+query = input("Enter query: ")
+
+result = 0
+
+for values, p in probs:
+    try:
+        if evaluate(query, values):
+            result += p
+    except Exception as e:
+        print("Invalid query format!")
+        exit()
+
+print("Answer:", result)
+
+Enter number of variables: 3
+Enter name of variable 1: l
+Enter name of variable 2: s
+Enter name of variable 3: t
+Total combinations: 8
+Enter probabilities for each combination:
+Combination 1 (use ['l', 's', 't']): l s t
+Probability: 0.10
+Combination 2 (use ['l', 's', 't']): l ~s t
+Probability: 0.20
+Combination 3 (use ['l', 's', 't']): l s ~t
+Probability: 0.05
+Combination 4 (use ['l', 's', 't']): l ~s ~t
+Probability: 0.08
+Combination 5 (use ['l', 's', 't']): ~l s t
+Probability: 0.15
+Combination 6 (use ['l', 's', 't']): ~l ~s t
+Probability: 0.10
+Combination 7 (use ['l', 's', 't']): ~l s ~t
+Probability: 0.20
+Combination 8 (use ['l', 's', 't']): ~l ~s ~t
+Probability: 0.12
+
+Enter query: ~s v l
+Answer: 0.65
+Enter query: ~s ^ t
+Answer: 0.30
+Enter query: l
+Answer: 0.43
+Enter query: s ^ t ^ l
+Answer: 0.1
+Enter query: l | t
+Answer: 0.68
+Enter query: ~s | l
+Answer: 0.65
+
+
+1227. Airplane seat assignment probability – Medium
+
+n passengers board an airplane with exactly n seats. The first passenger has lost the ticket and picks a seat randomly. But after that, the rest of the passengers will:
+
+Take their own seat if it is still available, and
+Pick other seats randomly when they find their seat occupied
+Return the probability that the nth person gets his own seat.
+
+ def nthPersonGetsNthSeat(n):
+    if n == 1:
+        return 1.0
+    return 0.5
+n = int(input("Enter number of passengers: "))
+result = nthPersonGetsNthSeat(n)
+print("Probability that nth person gets nth seat:", result)
+
+
+Enter number of passengers: 1
+Probability that nth person gets nth seat: 1.0
+Enter number of passengers: 2
+Probability that nth person gets nth seat: 0.5
+Enter number of passengers: 3
+Probability that nth person gets nth seat: 0.5
+
+
+
+
+
